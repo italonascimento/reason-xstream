@@ -2,15 +2,10 @@ type xs;
 type stream('a);
 type subscription;
 
-/* TODO: implement generic error type */
-type error = {
-  message: string,
-};
-
 [@bs.deriving abstract]
-type listener('a) = {
+type listener('a, 'e) = {
   [@bs.optional] next: 'a => unit,
-  [@bs.optional] error: error => unit,
+  [@bs.optional] error: 'e => unit,
   [@bs.optional] complete: unit => unit,
 };
 
@@ -23,7 +18,7 @@ type listener('a) = {
 [@bs.send.pipe: xs] external createWithMemory : unit => stream('a) = "";
 [@bs.send.pipe: xs] external never : unit => stream('a) = "";
 [@bs.send.pipe: xs] external empty : unit => stream('a) = "";
-[@bs.send.pipe: xs] external throw : error => stream('a) = "";
+[@bs.send.pipe: xs] external throw : 'b => stream('a) = "";
 [@bs.send.pipe: xs] external streamOf : 'a => stream('a) = "of";
 [@bs.send.pipe: xs] external fromArray : array('a) => stream('a) = "";
 [@bs.send.pipe: xs] external fromPromise : Js.Promise.t('a) => stream('a) = "";
