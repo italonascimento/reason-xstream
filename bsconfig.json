@@ -6,8 +6,7 @@
     "subdirs" : true
   },
   "package-specs": {
-    "module": "commonjs",
-    "in-source": true
+    "module": "commonjs"
   },
   "suffix": ".bs.js",
   "bs-dependencies": [
