@@ -1,6 +1,7 @@
 type xs;
 type stream('a);
 type subscription;
+[@bs.send.pipe: subscription] external unsubscribe: unit => unit = "";
 
 [@bs.deriving abstract]
 type listener('a, 'e) = {
@@ -30,11 +31,26 @@ let fromList = l => xs => xs |> fromArray(Array.of_list(l));
 
 
 /* OPERATORS */
-[@bs.send.pipe: stream('a)] external map: ('a => 'b) => stream('b) = "map";
-[@bs.send.pipe: stream('a)] external filter: ('a => bool) => stream('a) = "filter";
-[@bs.send.pipe: stream('a)] external debug: ('a => unit) => stream('a) = "debug";
-[@bs.send.pipe: stream('a)] external shamefullySendNext: ('a) => unit = "shamefullySendNext";
-[@bs.send.pipe: stream('a)] external subscribe: listener('a) => subscription = "subscribe";
-[@bs.send.pipe: stream('a)] external removeListener: listener('a) => unit = "removeListener";
-
-[@bs.send.pipe: subscription] external unsubscribe: unit => unit = "unsubscribe";
+[@bs.send.pipe: stream('a)] external addListener: listener('a, 'e) => unit = "";
+[@bs.send.pipe: stream('a)] external removeListener: listener('a, 'e) => unit = "";
+[@bs.send.pipe: stream('a)] external subscribe: listener('a, 'e) => subscription = "";
+[@bs.send.pipe: stream('a)] external map: ('a => 'b) => stream('b) = "";
+[@bs.send.pipe: stream('a)] external mapTo: 'b => stream('b) = "";
+[@bs.send.pipe: stream('a)] external filter: ('a => bool) => stream('a) = "";
+[@bs.send.pipe: stream('a)] external take: int => stream('a) = "";
+[@bs.send.pipe: stream('a)] external drop: int => stream('a) = "";
+[@bs.send.pipe: stream('a)] external last: unit => stream('a) = "";
+[@bs.send.pipe: stream('a)] external startWith: 'a => stream('a) = "";
+[@bs.send.pipe: stream('a)] external endWhen: stream('b) => stream('a) = "";
+[@bs.send.pipe: stream('a)] external fold: ((('b, 'a) => 'b), 'a) => stream('a) = "";
+[@bs.send.pipe: stream('a)] external replaceError: 'c => stream('b) = "";
+[@bs.send.pipe: stream(stream('a))] external flatten: unit => stream('a) = "";
+[@bs.send.pipe: stream('a)] external remember: unit => stream('a) = "";
+[@bs.send.pipe: stream('a)] external debug: ('a => unit) => stream('a) = "";
+[@bs.send.pipe: stream('a)] external imitate: stream('a) => stream('a) = "";
+[@bs.send.pipe: stream('a)] external shamefullySendNext: ('a) => unit = "";
+[@bs.send.pipe: stream('a)] external shamefullySendError: ('e) => unit = "";
+[@bs.send.pipe: stream('a)] external shamefullySendComplete: unit => unit = "";
+[@bs.send.pipe: stream('a)] external jsSetDebugListener: Js.Nullable.t(listener('a, 'e)) => unit = "setDebugListener";
+let setDebugListener = listener =>
+  jsSetDebugListener(Js.Nullable.fromOption(listener));
