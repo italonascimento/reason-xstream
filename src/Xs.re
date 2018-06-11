@@ -16,18 +16,48 @@ type listener('a, 'e) = {
 
 /* FACTORIES */
 [@bs.send.pipe: xs] external create : unit => stream('a) = "";
+let create = () => xs |> create();
+
 [@bs.send.pipe: xs] external createWithMemory : unit => stream('a) = "";
+let createWithMemory = () => xs |> createWithMemory();
+
 [@bs.send.pipe: xs] external never : unit => stream('a) = "";
+let never = () => xs |> never();
+
 [@bs.send.pipe: xs] external empty : unit => stream('a) = "";
+let empty = () => xs |> empty();
+
 [@bs.send.pipe: xs] external throw : 'b => stream('a) = "";
+let throw = err => xs |> throw(err);
+
 [@bs.send.pipe: xs] external streamOf : 'a => stream('a) = "of";
+let streamOf = value => xs |> streamOf(value);
+
 [@bs.send.pipe: xs] external fromArray : array('a) => stream('a) = "";
+let fromArray = arr => xs |> fromArray(arr);
+
 [@bs.send.pipe: xs] external fromPromise : Js.Promise.t('a) => stream('a) = "";
-[@bs.send.pipe: xs] external periodic : int => stream(int) = "";
-[@bs.send.pipe: xs] [@bs.splice]  external merge: array(stream('a)) => stream('a) = "";
-[@bs.send.pipe: xs] external combine: stream('a) => stream('b) => stream(('a, 'b)) = "";
-[@bs.send.pipe: xs] external combine3: stream('a) => stream('b) => stream('c) => stream(('a, 'b, 'c)) = "combine";
-let fromList = l => xs => xs |> fromArray(Array.of_list(l));
+let fromPromise = p => xs |> fromPromise(p);
+
+[@bs.send] external periodic : xs => int => stream(int) = "";
+let periodic = xs |> periodic;
+
+[@bs.send.pipe: xs] external combine:
+  stream('a) => stream('b) =>
+    stream(('a, 'b)) = "";
+let combine = a => b => xs |> combine(a, b);
+
+[@bs.send.pipe: xs] external combine3:
+  stream('a) => stream('b) => stream('c) =>
+    stream(('a, 'b, 'c)) = "combine";
+let combine3 = a => b => c => xs |> combine3(a, b, c);
+
+let fromList = l => fromArray(Array.of_list(l));
+
+type merge;
+[@bs.get] external merge : xs => merge = "";
+[@bs.send] external apply : merge => Js.Nullable.t('b) => array(stream('a)) => stream('a) = "";
+let merge = sources => apply(merge(xs), Js.Nullable.null, sources);
 
 
 /* OPERATORS */

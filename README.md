@@ -3,21 +3,32 @@
 ## Usage
 
 ```reason
-open XStream;
+/*
+Tick every second incremental numbers,
+only pass even numbers, then map them to their square,
+and stop after 5 seconds has passed
+*/
 
-let interval = xs
-  |> periodic(1000);
-
-interval
-  |> map(i => string_of_int(i + 1) ++ " seconds passed")
-  |> subscribe(
-    listener(~next= value => Js.log(value), ())
-  );
+let stream = Xs.periodic(1000)
+  |> Xs.filter(i => i mod 2 === 0)
+  |> Xs.map(i => i * i)
+  |> Xs.endWhen(
+    Xs.periodic(5000)
+      |> Xs.take(1)
+    );
 
 /*
-1 seconds passed
-2 seconds passed
-3 seconds passed
-...
+So far, the stream is idle.
+As soon as it gets its first listener, it starts executing.
 */
+
+stream
+|> Xs.addListener(
+  Xs.listener(
+    ~next= i => Js.log(i),
+    ~error= err => Js.log(err),
+    ~complete= () => Js.log("completed"),
+    ()
+  )
+);
 ```

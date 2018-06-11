@@ -1,4 +1,4 @@
-open XStream;
+open Xs;
 
 [@bs.module "xstream/extra/sampleCombine"] external jsSampleCombine:
   (. stream('b)) => ((. stream('a)) => stream(('a, 'b))) = "default";
