@@ -81,6 +81,6 @@ let merge = sources => apply(merge(xs), Js.Nullable.null, sources);
 [@bs.send.pipe: stream('a)] external shamefullySendNext: ('a) => unit = "";
 [@bs.send.pipe: stream('a)] external shamefullySendError: ('e) => unit = "";
 [@bs.send.pipe: stream('a)] external shamefullySendComplete: unit => unit = "";
-[@bs.send.pipe: stream('a)] external jsSetDebugListener: Js.Nullable.t(listener('a, 'e)) => unit = "setDebugListener";
+[@bs.send.pipe: stream('a)] external setDebugListener: Js.Nullable.t(listener('a, 'e)) => unit = "setDebugListener";
 let setDebugListener = listener =>
-  jsSetDebugListener(Js.Nullable.fromOption(listener));
+  setDebugListener(Js.Nullable.fromOption(listener));
