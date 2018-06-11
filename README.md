@@ -1,6 +1,10 @@
-# ReasonML bindings for xstream
+# reason-xstream
+## ReasonML bindings for xstream
 
-## Usage
+Original JavaScript lib:
+https://github.com/staltz/xstream
+
+## Example
 
 ```reason
 /*
