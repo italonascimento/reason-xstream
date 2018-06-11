@@ -1,8 +1,10 @@
-# reason-xstream
-## ReasonML bindings for xstream
+# ReasonXstream
+
+ReasonML bindings for xstream
 
 Original JavaScript lib:
 https://github.com/staltz/xstream
+
 
 ## Example
 
@@ -35,4 +37,44 @@ stream
     ()
   )
 );
+```
+
+## Currying
+
+With ReasonXstream you may use currying as you would in any idiomatic Reason code.
+
+```
+/*
+Passing one argument at a time for 
+a function which takes two arguments
+*/
+let a = Xs.periodic(1000)
+  |> Xs.mapTo("A");
+let b = Xs.periodic(2000)
+  |> Xs.mapTo("B");
+
+let combineWithA = Xs.combine(a);
+
+combineWithA(b) 
+|> Xs.subscribe(
+  Xs.listener(
+    ~next= v => Js.log(v),
+    ()
+  )
+);
+
+/*
+Passing two arguments at once for 
+a function which returns a function
+*/
+let c = Xs.periodic(1000)
+  |> Xs.mapTo("C");
+let d = Xs.periodic(2000)
+  |> Xs.mapTo("D");
+
+/*
+same as:
+let cWithLatestD = c |> XsExtra.sampleCombine(d);
+*/
+let cWithLatestD = XsExtra.sampleCombine(d, c);
 ```
