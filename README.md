@@ -43,7 +43,7 @@ stream
 
 With ReasonXstream you may use currying as you would in any idiomatic Reason code.
 
-```
+```reason
 /*
 Passing one argument at a time for 
 a function which takes two arguments
