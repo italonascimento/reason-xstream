@@ -1,8 +1,56 @@
 open Xs;
 
-[@bs.module "xstream/extra/sampleCombine"] external jsSampleCombine:
-  (. stream('b)) => ((. stream('a)) => stream(('a, 'b))) = "default";
+[@bs.module "xstream/extra/buffer"]
+external buffer: (. stream('b)) => (. stream('a)) => stream(array('a)) = "default";
+let buffer =  separator => source => buffer(.separator)(.source);
+
+type concat;
+[@bs.module "xstream/extra/concat"] external concat: concat = "default";
+[@bs.send] external apply: concat => Js.Nullable.t('b) => array(stream('a)) => stream('a) = "";
+let concat = sources => apply(concat, Js.Nullable.null, sources);
+
+[@bs.module "xstream/extra/debounce"]
+external debounce: (. int) => (. stream('a)) => stream('a) = "default";
+let debounce = period => source => debounce(.period)(.source);
+
+[@bs.module "xstream/extra/delay"]
+external delay: (. int) => (. stream('a)) => stream('a) = "default";
+let delay = period => source => delay(.period)(.source);
+
+[@bs.module "xstream/extra/dropRepeats"]
+external dropRepeats: (. Js.Nullable.t('a => 'a => bool)) => (. stream('a)) => stream('a) = "default";
+let dropRepeats = 
+  (~isEqual: option('a => 'a => bool)=?, ()) => 
+    source => 
+      dropRepeats(. Js.Nullable.fromOption(isEqual))(.source);
+
+[@bs.module "xstream/extra/dropUntil"]
+external dropUntil: (. stream('b)) => (. stream('a)) => stream('a) = "default";
+let dropUntil = other => source => dropUntil(.other)(.source);
+
+[@bs.module "xstream/extra/flattenConcurrently"]
+external flattenConcurrently: stream(stream('a)) => stream('a) = "default";
+
+[@bs.module "xstream/extra/flattenSequentially"]
+external  flattenSequentially: stream(stream('a)) => stream('a) = "default";
+
+[@bs.module "xstream/extra/sampleCombine"]
+external sampleCombine: (. stream('b)) => ((. stream('a)) => stream(('a, 'b))) = "default";
 let sampleCombine =
-  combined =>
-    source =>
-      jsSampleCombine(.combined)(.source);
+  combined => source => sampleCombine(.combined)(.source);
+
+let a = periodic(1000);
+let b = periodic(3000)
+|> take(1);
+
+let c = periodic(2000)
+|> take(4);
+
+a
+|> dropUntil(b)
+|> subscribe(
+  listener(
+    ~next= v => Js.log(v),
+    ()
+  )
+);

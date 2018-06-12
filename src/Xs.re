@@ -36,15 +36,15 @@ let streamOf = value => xs |> streamOf(value);
 [@bs.send.pipe: xs] external fromArray : array('a) => stream('a) = "";
 let fromArray = arr => xs |> fromArray(arr);
 
-[@bs.send.pipe: xs] external fromPromise : Js.Promise.t('a) => stream('a) = "";
+[@bs.send.pipe: xs] 
+external fromPromise : Js.Promise.t('a) => stream('a) = "";
 let fromPromise = p => xs |> fromPromise(p);
 
 [@bs.send] external periodic : xs => int => stream(int) = "";
 let periodic = xs |> periodic;
 
-[@bs.send.pipe: xs] external combine:
-  stream('a) => stream('b) =>
-    stream(('a, 'b)) = "";
+[@bs.send.pipe: xs]
+external combine: stream('a) => stream('b) => stream(('a, 'b)) = "";
 let combine = a => b => xs |> combine(a, b);
 
 [@bs.send.pipe: xs] external combine3:
