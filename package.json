@@ -1,16 +1,17 @@
 {
   "name": "reason-xstream",
   "version": "0.1.0",
+  "description": "ReasonML bindings for xstream",
+  "author": "Ítalo Alves Bezerra do Nascimento <italo.abnascimento@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world"
   },
   "keywords": [
-    "BuckleScript"
+    "Reason", "xstream", "Reactive"
   ],
-  "author": "",
-  "license": "MIT",
   "devDependencies": {
     "bs-platform": "^3.1.1"
   },
