@@ -8,7 +8,7 @@ source |> XsExtra.split(separator)
       ~next= stream => {
         stream |> addListener(
           listener(
-            ~next= value => Js.log(value),
+            ~next=Js.log,
             ~complete= () => Js.log("inner completed"),
             ()
           )
@@ -19,4 +19,4 @@ source |> XsExtra.split(separator)
       ()
     )
   )
-)
+);
