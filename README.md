@@ -83,12 +83,12 @@ let cWithLatestD = XsExtra.sampleCombine(d, c);
 
 ## TODO
 
-Extras:
-
-* fromDiagram (factory)
-* fromEvent (factory)
-* pairwise (operator)
-* sampleCombine (operator)
-* split (operator)
-* throttle (operator)
-* tween (factory)
+* Tests
+* Extras:
+ * fromDiagram (factory)
+ * fromEvent (factory)
+ * pairwise (operator)
+ * sampleCombine (operator)
+ * split (operator)
+ * throttle (operator)
+ * tween (factory)
