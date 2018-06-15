@@ -14,27 +14,29 @@ Tick every second incremental numbers,
 only pass even numbers, then map them to their square,
 and stop after 5 seconds has passed
 */
-
-let stream = Xs.periodic(1000)
-  |> Xs.filter(i => i mod 2 === 0)
-  |> Xs.map(i => i * i)
-  |> Xs.endWhen(
-    Xs.periodic(5000)
-      |> Xs.take(1)
-    );
+let stream = Xs.(
+  periodic(1000)
+    |> filter(i => i mod 2 === 0)
+    |> map(i => i * i)
+    |> endWhen(
+      periodic(5000)
+        |> take(1)
+      )
+);
 
 /*
 So far, the stream is idle.
 As soon as it gets its first listener, it starts executing.
 */
-
 stream
-|> Xs.addListener(
-  Xs.listener(
-    ~next= i => Js.log(i),
-    ~error= err => Js.log(err),
-    ~complete= () => Js.log("completed"),
-    ()
+|> Xs.(
+  addListener(
+    listener(
+      ~next= i => Js.log(i),
+      ~error= err => Js.log(err),
+      ~complete= () => Js.log("completed"),
+      ()
+    )
   )
 );
 ```
@@ -48,18 +50,20 @@ With ReasonXstream you may use currying as you would in any idiomatic Reason cod
 Passing one argument at a time for 
 a function which takes two arguments
 */
-let a = Xs.periodic(1000)
-  |> Xs.mapTo("A");
-let b = Xs.periodic(2000)
-  |> Xs.mapTo("B");
+let a = Xs.(periodic(1000)
+  |> mapTo("A"));
+let b = Xs.(periodic(2000)
+  |> mapTo("B"));
 
 let combineWithA = Xs.combine(a);
 
 combineWithA(b) 
-|> Xs.subscribe(
-  Xs.listener(
-    ~next= v => Js.log(v),
-    ()
+|> Xs.(
+  subscribe(
+    listener(
+      ~next= v => Js.log(v),
+      ()
+    )
   )
 );
 
@@ -67,10 +71,10 @@ combineWithA(b)
 Passing two arguments at once for 
 a function which returns a function
 */
-let c = Xs.periodic(1000)
-  |> Xs.mapTo("C");
-let d = Xs.periodic(2000)
-  |> Xs.mapTo("D");
+let c = Xs.(periodic(1000)
+  |> mapTo("C"));
+let d = Xs.(periodic(2000)
+  |> mapTo("D"));
 
 /*
 same as:
