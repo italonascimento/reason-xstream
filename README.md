@@ -4,8 +4,7 @@ ReasonML bindings for [xstream](https://github.com/staltz/xstream).
 
 From the original lib description:
 
-> An extremely intuitive, small, and fast
-> functional reactive stream library for JavaScript
+> ### An extremely intuitive, small, and fast functional reactive stream library for JavaScript
 >
 > * Only 26 core operators and factories
 > * Only "hot" streams
@@ -99,5 +98,6 @@ let cWithLatestD = XsExtra.sampleCombine(d, c);
 
 ## TODO
 
+* Implement Producer binding
 * Create automated tests
 * Write documentation/examples
