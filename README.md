@@ -1,9 +1,18 @@
 # ReasonXstream
 
-ReasonML bindings for xstream.
+ReasonML bindings for [xstream](https://github.com/staltz/xstream).
 
-Original JavaScript lib:
-https://github.com/staltz/xstream
+From the original lib description:
+
+> An extremely intuitive, small, and fast
+> functional reactive stream library for JavaScript
+
+> * Only 26 core operators and factories
+> * Only "hot" streams
+> * Written in TypeScript
+> * Approximately 30 kB in size, when minified
+> * On average, faster than RxJS 4, Kefir, Bacon.js, as fast as RxJS 5, and slower than most.js
+> * Tailored for Cycle.js, or applications with limited use of subscribe
 
 
 ## Example
