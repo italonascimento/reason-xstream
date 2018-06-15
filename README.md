@@ -85,6 +85,6 @@ let cWithLatestD = XsExtra.sampleCombine(d, c);
 
 * Tests
 * Extras:
- * split (operator)
- * throttle (operator)
- * tween (factory)
+  * split (operator)
+  * throttle (operator)
+  * tween (factory)
