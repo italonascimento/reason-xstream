@@ -2,8 +2,6 @@
 
 ReasonML bindings for xstream.
 
-Still a work in progress. Take a look at the [TODO](#todo) section to see what's missing.
-
 Original JavaScript lib:
 https://github.com/staltz/xstream
 
@@ -83,6 +81,5 @@ let cWithLatestD = XsExtra.sampleCombine(d, c);
 
 ## TODO
 
-* Tests
-* Extras:
-  * tween (factory)
+* Create automated tests
+* Write documentation/examples
