@@ -10,7 +10,9 @@
     "clean": "bsb -clean-world"
   },
   "keywords": [
-    "Reason", "xstream", "Reactive"
+    "Reason",
+    "xstream",
+    "Reactive"
   ],
   "devDependencies": {
     "bs-platform": "^3.1.1"
