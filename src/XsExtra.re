@@ -64,3 +64,8 @@ let sampleCombine =
 external sampleCombine2: (. stream('b), stream('c)) => ((. stream('a)) => stream(('a, 'b, 'c))) = "default";
 let sampleCombine2 =
   combined1 => combined2 => source => sampleCombine2(.combined1, combined2)(.source);
+
+[@bs.module "xstream/extra/split"]
+external split: (. stream('b)) => (. stream('a)) => stream(stream('a)) = "default";
+let split = separator => source => split(.separator)(.source);
+
