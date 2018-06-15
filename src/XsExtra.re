@@ -32,7 +32,19 @@ let dropUntil = other => source => dropUntil(.other)(.source);
 external flattenConcurrently: stream(stream('a)) => stream('a) = "default";
 
 [@bs.module "xstream/extra/flattenSequentially"]
-external  flattenSequentially: stream(stream('a)) => stream('a) = "default";
+external flattenSequentially: stream(stream('a)) => stream('a) = "default";
+
+[@bs.deriving abstract]
+type diagramOptions('a, 'e) = {
+  [@bs.optional] values: Js.Dict.t('a),
+  [@bs.optional] timeUnit: int,
+  [@bs.optional] errorValue: 'e,
+};
+
+[@bs.module "xstream/extra/fromDiagram"]
+external fromDiagram: string => Js.Nullable.t(diagramOptions('a, 'b)) => stream('a) = "default";
+let fromDiagram = (~options=?, diagram) =>
+  fromDiagram(diagram, Js.Nullable.fromOption(options));
 
 [@bs.module "xstream/extra/sampleCombine"]
 external sampleCombine: (. stream('b)) => ((. stream('a)) => stream(('a, 'b))) = "default";

@@ -85,7 +85,6 @@ let cWithLatestD = XsExtra.sampleCombine(d, c);
 
 * Tests
 * Extras:
- * fromDiagram (factory)
  * fromEvent (factory)
  * pairwise (operator)
  * sampleCombine (operator)
