@@ -14,6 +14,11 @@ From the original lib description:
 > * On average, faster than RxJS 4, Kefir, Bacon.js, as fast as RxJS 5, and slower than most.js
 > * Tailored for Cycle.js, or applications with limited use of subscribe
 
+## Installation
+
+```
+npm i -s reason-xstream
+```
 
 ## Example
 
