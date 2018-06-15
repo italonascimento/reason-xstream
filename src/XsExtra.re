@@ -38,19 +38,3 @@ external  flattenSequentially: stream(stream('a)) => stream('a) = "default";
 external sampleCombine: (. stream('b)) => ((. stream('a)) => stream(('a, 'b))) = "default";
 let sampleCombine =
   combined => source => sampleCombine(.combined)(.source);
-
-let a = periodic(1000);
-let b = periodic(3000)
-|> take(1);
-
-let c = periodic(2000)
-|> take(4);
-
-a
-|> dropUntil(b)
-|> subscribe(
-  listener(
-    ~next= v => Js.log(v),
-    ()
-  )
-);
