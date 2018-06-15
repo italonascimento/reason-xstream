@@ -6,7 +6,7 @@ From the original lib description:
 
 > An extremely intuitive, small, and fast
 > functional reactive stream library for JavaScript
-
+>
 > * Only 26 core operators and factories
 > * Only "hot" streams
 > * Written in TypeScript
