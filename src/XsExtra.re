@@ -69,3 +69,6 @@ let sampleCombine2 =
 external split: (. stream('b)) => (. stream('a)) => stream(stream('a)) = "default";
 let split = separator => source => split(.separator)(.source);
 
+[@bs.module "xstream/extra/throttle"]
+external throttle: (. int) => (. stream('a)) => stream('a) = "default";
+let throttle = period => source => throttle(.period)(.source);
