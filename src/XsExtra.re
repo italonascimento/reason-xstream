@@ -46,7 +46,21 @@ external fromDiagram: string => Js.Nullable.t(diagramOptions('a, 'b)) => stream(
 let fromDiagram = (~options=?, diagram) =>
   fromDiagram(diagram, Js.Nullable.fromOption(options));
 
+type element;
+[@bs.module "xstream/extra/fromEvent"]
+external fromEvent: element => string => bool => stream('a) = "default";
+let fromEvent = (~useCapture=false, element, event) =>
+  fromEvent(element, event, useCapture);
+
+[@bs.module "xstream/extra/pairwise"]
+external pairwise: (stream('a)) => stream(('a, 'a)) = "default";
+
 [@bs.module "xstream/extra/sampleCombine"]
 external sampleCombine: (. stream('b)) => ((. stream('a)) => stream(('a, 'b))) = "default";
 let sampleCombine =
   combined => source => sampleCombine(.combined)(.source);
+
+[@bs.module "xstream/extra/sampleCombine"]
+external sampleCombine2: (. stream('b), stream('c)) => ((. stream('a)) => stream(('a, 'b, 'c))) = "default";
+let sampleCombine2 =
+  combined1 => combined2 => source => sampleCombine2(.combined1, combined2)(.source);
