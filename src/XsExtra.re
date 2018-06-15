@@ -72,3 +72,36 @@ let split = separator => source => split(.separator)(.source);
 [@bs.module "xstream/extra/throttle"]
 external throttle: (. int) => (. stream('a)) => stream('a) = "default";
 let throttle = period => source => throttle(.period)(.source);
+
+
+type easingObject;
+type easingFunction = unit => unit;
+
+[@bs.deriving abstract]
+type tweenConfig = {
+  [@bs.as "from"] fromValue: float,
+  [@bs.as "to"] toValue: float,
+  duration: int,
+  [@bs.optional] ease: easingFunction,
+  [@bs.optional] interval: int,
+};
+
+type tween = tweenConfig => stream(float);
+
+[@bs.module "xstream/extra/tween"]
+external tween: tween = "default";
+
+[@bs.get] external linear: tween => easingObject = "";
+[@bs.get] external power2: tween => easingObject = "";
+[@bs.get] external power3: tween => easingObject = "";
+[@bs.get] external power4: tween => easingObject = "";
+[@bs.get] external exponential: tween => easingObject = "";
+[@bs.get] external back: tween => easingObject = "";
+[@bs.get] external bounce: tween => easingObject = "";
+[@bs.get] external circular: tween => easingObject = "";
+[@bs.get] external elastic: tween => easingObject = "";
+[@bs.get] external sine: tween => easingObject = "";
+
+[@bs.get] external easeIn: easingObject => easingFunction = "";
+[@bs.get] external easeOut: easingObject => easingFunction = "";
+[@bs.get] external easeInOut: easingObject => easingFunction = "";
