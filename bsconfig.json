@@ -1,19 +1,23 @@
 {
   "name": "reason-xstream",
   "version": "0.1.0",
-  "sources": {
-    "dir" : "src",
-    "subdirs" : true
-  },
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "examples",
+      "subdirs": true
+    }
+  ],
   "package-specs": {
     "module": "commonjs"
   },
   "suffix": ".bs.js",
-  "bs-dependencies": [
-    
-  ],
+  "bs-dependencies": [],
   "warnings": {
-    "error" : "+101"
+    "error": "+101"
   },
   "namespace": true,
   "refmt": 3

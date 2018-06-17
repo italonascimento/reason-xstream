@@ -98,6 +98,5 @@ let cWithLatestD = XsExtra.sampleCombine(d, c);
 
 ## TODO
 
-* Implement Producer binding
 * Create automated tests
 * Write documentation/examples

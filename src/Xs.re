@@ -16,16 +16,33 @@ type listener('a, 'e) = {
   complete: unit => unit,
 };
 
+[@bs.send.pipe: listener('a, 'e)] external next : 'a => unit = "";
+
+[@bs.send.pipe: listener('a, 'e)] external error : 'e => unit = "";
+
+[@bs.send.pipe: listener('a, 'e)] external complete : unit => unit = "";
+
+[@bs.deriving abstract]
+type producer('a, 'e) = {
+  start: listener('a, 'e) => unit,
+  stop: unit => unit,
+};
+
 [@bs.module "xstream"] external xs : xs = "default";
 
 /* FACTORIES */
-[@bs.send.pipe: xs] external create : unit => stream('a) = "";
+[@bs.send.pipe: xs]
+external create : Js.Nullable.t(producer('a, 'e)) => stream('a) = "";
 
-let create = () => xs |> create();
+let create = (~producer=?, ()) =>
+  xs |> create(Js.Nullable.fromOption(producer));
 
-[@bs.send.pipe: xs] external createWithMemory : unit => stream('a) = "";
+[@bs.send.pipe: xs]
+external createWithMemory : Js.Nullable.t(producer('a, 'e)) => stream('a) =
+  "";
 
-let createWithMemory = () => xs |> createWithMemory();
+let createWithMemory = (~producer=?, ()) =>
+  xs |> createWithMemory(Js.Nullable.fromOption(producer));
 
 [@bs.send.pipe: xs] external never : unit => stream('a) = "";
 

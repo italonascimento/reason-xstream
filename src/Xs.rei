@@ -15,7 +15,18 @@ let listener:
   ) =>
   listener('a, 'e);
 
-let create: unit => stream('a);
+[@bs.send.pipe: listener('a, 'e)] external next : 'a => unit = "";
+
+[@bs.send.pipe: listener('a, 'e)] external error : 'e => unit = "";
+
+[@bs.send.pipe: listener('a, 'e)] external complete : unit => unit = "";
+
+type producer('a, 'e);
+
+let producer:
+  (~start: listener('a, 'e) => unit, ~stop: unit => unit) => producer('a, 'e);
+
+let create: (~producer: producer('a, 'e)=?, unit) => stream('a);
 
 let createWithMemory: unit => stream('a);
 
