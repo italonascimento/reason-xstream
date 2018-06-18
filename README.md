@@ -108,7 +108,7 @@ Factories:
 * [never](#never)
 * [empty](#empty)
 
-### `listener(~next=?, ~error=?, complete=?)`
+### `listener(~next=?, ~error=?, ~complete=?)`
 
 Creates a listener, which can listen to a stream's emissions, errors or completion events.
 
