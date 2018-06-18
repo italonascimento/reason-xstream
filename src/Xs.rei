@@ -28,7 +28,7 @@ let producer:
 
 let create: (~producer: producer('a, 'e)=?, unit) => stream('a);
 
-let createWithMemory: unit => stream('a);
+let createWithMemory: (~producer: producer('a, 'e)=?, unit) => stream('a);
 
 let never: unit => stream('a);
 
