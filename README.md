@@ -96,7 +96,7 @@ let cWithLatestD = c |> XsExtra.sampleCombine(d);
 let cWithLatestD = XsExtra.sampleCombine(d, c);
 ```
 
-## Documentation
+## API Documentation
 
 * [listener](#listenernext-error-complete)
 * [producer](#producerstart-stop)
@@ -152,9 +152,7 @@ let producer: Xs.producer(string, error) =
 let stream = Xs.create(~producer, ());
 ```
 
-### Factories
-
-#### `create(~producer=?)`
+### `create(~producer=?)`
 
 Creates a new stream ginven a producer.
 
@@ -166,7 +164,7 @@ let stream = Xs.create();
 let stream = Xs.create(~producer=myProducer, ());
 ```
 
-#### `createWithMemory(~producer=?)`
+### `createWithMemory(~producer=?)`
 
 Creates a new memory stream given a producer.
 
@@ -178,11 +176,11 @@ let stream = Xs.createWithMemory();
 let stream = Xs.createWithMemory(~producer=myProducer, ());
 ```
 
-#### `never()`
+### `never()`
 
 Creates a stream that never emits any event.
 
-#### `empty()`
+### `empty()`
 
 Creates a stream that completes immediately.
 
