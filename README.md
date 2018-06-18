@@ -107,7 +107,6 @@ Factories:
 * [createWithMemory](#createwithmemoryproducer)
 * [never](#never)
 * [empty](#empty)
-* [empty](#empty)
 
 ### `listener(~next=?, ~error=?, complete=?)`
 
