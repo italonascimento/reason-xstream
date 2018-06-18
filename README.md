@@ -96,6 +96,86 @@ let cWithLatestD = c |> XsExtra.sampleCombine(d);
 let cWithLatestD = XsExtra.sampleCombine(d, c);
 ```
 
+## Documentation
+
+### `listener(~next=?, ~error=?, complete=?)`
+
+Creates a listener, which can listen to a stream's emissions, errors or completion events.
+
+```reason
+let listener = Xs.listener(
+  ~next= Js.log,
+  ~error= Js.log,
+  ~complete= () => Js.log("complete")
+);
+
+stream |> Xs.addListener(listener);
+```
+
+### `producer(~start, ~stop)`
+
+Creates a `producer`, which produces events to be broadcast on a stream.
+
+```reason
+type intervalId;
+[@bs.val] external setInterval : (unit => unit, int) => intervalId = "";
+[@bs.val] external clearInterval : intervalId => unit = "";
+
+let id = ref(None);
+
+let producer: Xs.producer(string, error) =
+  Xs.(
+    producer(
+      ~start=
+        listener =>
+          id := Some(setInterval(() => listener |> next("yo"), 1000)),
+      ~stop=
+        () =>
+          switch (id^) {
+          | None => ()
+          | Some(id) => clearInterval(id)
+          },
+    )
+  );
+
+/* Emits "yo" every 1 second */
+let stream = Xs.create(~producer, ());
+```
+
+### Factories
+
+#### `create(~producer=?)`
+
+Creates a new stream ginven a producer.
+
+```reason
+/* New stream without producer */
+let stream = Xs.create();
+
+/* Passing optional producer */
+let stream = Xs.create(~producer=myProducer, ());
+```
+
+#### `createWithMemory(~producer=?)`
+
+Creates a new memory stream given a producer.
+
+```reason
+/* New memoryStream without producer */
+let stream = Xs.createWithMemory();
+
+/* Passing optional producer */
+let stream = Xs.createWithMemory(~producer=myProducer, ());
+```
+
+#### `never()`
+
+Creates a stream that never emits any event.
+
+#### `empty()`
+
+Creates a stream that completes immediately.
+
 ## TODO
 
 * Create automated tests
