@@ -98,6 +98,17 @@ let cWithLatestD = XsExtra.sampleCombine(d, c);
 
 ## Documentation
 
+* [listener](#listenernext-error-complete)
+* [producer](#producerstart-stop)
+
+Factories:
+
+* [create](#createproducer)
+* [createWithMemory](#createwithmemoryproducer)
+* [never](#never)
+* [empty](#empty)
+* [empty](#empty)
+
 ### `listener(~next=?, ~error=?, complete=?)`
 
 Creates a listener, which can listen to a stream's emissions, errors or completion events.
