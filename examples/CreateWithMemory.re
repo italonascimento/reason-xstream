@@ -23,6 +23,6 @@ let producer: Xs.producer(string, error) =
     )
   );
 
-let stream = Xs.create(~producer, ());
+let stream = Xs.createWithMemory(~producer, ());
 
 stream |> Xs.(subscribe(listener(~next=Js.log, ())));
