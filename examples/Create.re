@@ -1,22 +1,28 @@
 type error;
 
-[@bs.val] external setInterval : (unit => unit, int) => int = "";
+type intervalId;
 
-[@bs.val] external clearInterval : int => unit = "";
+[@bs.val] external setInterval : (unit => unit, int) => intervalId = "";
 
-let id = ref(0);
+[@bs.val] external clearInterval : intervalId => unit = "";
+
+let id = ref(None);
 
 let producer: Xs.producer(string, error) =
   Xs.(
     producer(
       ~start=
-        listener => id := setInterval(() => listener |> next("yo"), 1000),
-      ~stop=() => clearInterval(id^),
+        listener =>
+          id := Some(setInterval(() => listener |> next("yo"), 1000)),
+      ~stop=
+        () =>
+          switch (id^) {
+          | None => ()
+          | Some(id) => clearInterval(id)
+          },
     )
   );
 
 let stream = Xs.create(~producer, ());
-
-Js.log(stream);
 
 stream |> Xs.(addListener(listener(~next=Js.log, ())));
