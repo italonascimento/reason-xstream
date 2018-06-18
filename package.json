@@ -1,6 +1,6 @@
 {
   "name": "reason-xstream",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "ReasonML bindings for xstream",
   "author": "Ítalo Alves Bezerra do Nascimento <italo.abnascimento@gmail.com>",
   "license": "MIT",
