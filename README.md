@@ -98,19 +98,35 @@ let cWithLatestD = XsExtra.sampleCombine(d, c);
 
 ## API Documentation
 
-* [listener](#listenernext-error-complete)
-* [producer](#producerstart-stop)
+* `[listener](#listener)`
+* `[producer](#producer)`
 
 Factories:
 
-* [create](#createproducer)
-* [createWithMemory](#createwithmemoryproducer)
-* [never](#never)
-* [empty](#empty)
+* `[create](#create)`
+* `[createWithMemory](#createwithmemory)`
+* `[never](#never)`
+* `[empty](#empty)`
+* `[throw](#throw)`
+* `[streamOf](#streamof)`
+* `[fromArray](#fromarray)`
+* `[fromList](#fromlist)`
 
-### `listener(~next=?, ~error=?, ~complete=?)`
+### `Listener`
 
-Creates a listener, which can listen to a stream's emissions, errors or completion events.
+A Listener is a JavaScript object with one to three functions attached to it: `next('a)`, `error('e)`, and `complete()`. There is usually one function for each type of event a stream may emit, but only `next` is always required.
+
+Make use of the `Xs.listener` function to build a listener:
+
+```reason
+Xs.listener: (~next: 'a => unit, ~error: option('e => unit)=?, ~complete: option(unit => unit)=?) => Xs.listener('a, 'e)
+```
+
+* `next` events are the typical type, they deliver a value;
+* `error` events abort (stop) the execution of the stream, and happen when something goes wrong in the stream (or upstream somewhere in the chain of operators);
+* `complete` events signal the peaceful stop of the execution of the stream.
+
+#### Example
 
 ```reason
 let listener = Xs.listener(
@@ -118,13 +134,33 @@ let listener = Xs.listener(
   ~error= Js.log,
   ~complete= () => Js.log("complete")
 );
+```
 
+Then, attatch the listener to a stream:
+
+```reason
 stream |> Xs.addListener(listener);
 ```
 
-### `producer(~start, ~stop)`
+And remove when you think it's done:
 
-Creates a `producer`, which produces events to be broadcast on a stream.
+```reason
+stream |> Xs.removeListener(listener);
+```
+
+### Producer
+
+A producer is like a machine that produces events to be broadcast on a stream.
+
+Producers are JavaScript objects with two functions attached: `start(listener)` and `stop()`. Once you call `start` with a `listener`, the producer will start generating events and it will send those to the listener. When you call `stop()`, the producer should quit doing its own thing.
+
+Make use of the `Xs.producer` function to build a producer:
+
+```reason
+Xs.producer: (~start: Xs.listener('a, 'e) => unit, ~stop: unit => unit) => Xs.producer('a, 'e)
+```
+
+#### Example
 
 ```reason
 type intervalId;
@@ -152,37 +188,126 @@ let producer: Xs.producer(string, error) =
 let stream = Xs.create(~producer, ());
 ```
 
-### `create(~producer=?)`
+### `create`
+
+```reason
+Xs.create: (~producer: option(Xs.producer('a, 'e))=?) => Xs.stream('a)
+```
 
 Creates a new stream ginven a producer.
 
+#### Example
+
 ```reason
-/* New stream without producer */
+/* New stream without producer, which never emits any value */
 let stream = Xs.create();
 
 /* Passing optional producer */
 let stream = Xs.create(~producer=myProducer, ());
 ```
 
-### `createWithMemory(~producer=?)`
+### `createWithMemory`
+
+```reason
+Xs.createWithMemory: (~producer: option(Xs.producer('a, 'e))=?) => Xs.stream('a)
+```
 
 Creates a new memory stream given a producer.
 
+#### Example
+
 ```reason
-/* New memoryStream without producer */
+/* New memoryStream without producer, which never emits any value */
 let stream = Xs.createWithMemory();
 
 /* Passing optional producer */
 let stream = Xs.createWithMemory(~producer=myProducer, ());
 ```
 
-### `never()`
+### `never`
+
+```reason
+Xs.never: unit => Xs.stream('a)
+```
 
 Creates a stream that never emits any event.
 
-### `empty()`
+#### Marble diagram
+
+```
+never
+--------------------------
+```
+
+### `empty`
+
+```reason
+Xs.empty: unit => Xs.stream('a)
+```
 
 Creates a stream that completes immediately.
+
+#### Marble diagram
+
+```
+empty
+-|
+```
+
+### `throw`
+
+```reason
+Xs.error: 'e => Xs.stream('a)
+```
+
+Creates a stream that immediately emits an "error" with the value passed as argument.
+
+#### Marble diagram
+
+```
+throw(X)
+-X
+```
+
+### `streamOf`
+
+```reason
+Xs.streamOf: 'a => Xs.stream('a)
+```
+
+Creates a stream that immediately emits the value passed as argument, then completes.
+
+*Note: unlike the original JavaScript equivalent `of`, `streamOf` takes accepts only one argument. Use `[fromArray](#fromarray)` or `[fromList](#fromlist)` if you need to emit more values.*
+
+### `fromArray`
+
+```reason
+Xs.fromArray: array('a) => Xs.stream('a)
+```
+
+Converts an array to a stream. The returned stream will emit synchronously all the items in the array, and then complete.
+
+#### Marble diagram
+
+```
+fromArray([|1, 2, 3|])
+123|
+```
+
+### `fromList`
+
+```reason
+Xs.fromArray: array('a) => Xs.stream('a)
+```
+
+Similar to `[fromArray](#fromarray)`. Converts a list to a stream. The returned stream will emit synchronously all the items in the list, and then complete.
+
+#### Marble diagram
+
+```
+fromArray([1, 2, 3])
+123|
+```
 
 ## TODO
 
