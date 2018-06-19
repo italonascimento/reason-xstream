@@ -148,6 +148,8 @@ And remove when you think it's done:
 stream |> Xs.removeListener(listener);
 ```
 
+---
+
 ### Producer
 
 A producer is like a machine that produces events to be broadcast on a stream.
@@ -188,7 +190,9 @@ let producer: Xs.producer(string, error) =
 let stream = Xs.create(~producer, ());
 ```
 
-### `create`
+---
+
+### `create(~producer=?)`
 
 Creates a new stream ginven a producer.
 
@@ -206,7 +210,9 @@ let stream = Xs.create();
 let stream = Xs.create(~producer=myProducer, ());
 ```
 
-### `createWithMemory`
+---
+
+### `createWithMemory(~producer=?)`
 
 Creates a new memory stream given a producer.
 
@@ -224,7 +230,9 @@ let stream = Xs.createWithMemory();
 let stream = Xs.createWithMemory(~producer=myProducer, ());
 ```
 
-### `never`
+---
+
+### `never()`
 
 Creates a stream that never emits any event.
 
@@ -239,7 +247,9 @@ never
 --------------------------
 ```
 
-### `empty`
+---
+
+### `empty()`
 
 Creates a stream that completes immediately.
 
@@ -254,7 +264,9 @@ empty
 -|
 ```
 
-### `throw`
+---
+
+### `throw('e)`
 
 Creates a stream that immediately emits an "error" with the value passed as argument.
 
@@ -269,7 +281,9 @@ throw(X)
 -X
 ```
 
-### `streamOf`
+---
+
+### `streamOf('a)`
 
 Creates a stream that immediately emits the value passed as argument, then completes.
 
@@ -277,9 +291,11 @@ Creates a stream that immediately emits the value passed as argument, then compl
 Xs.streamOf: 'a => Xs.stream('a)
 ```
 
-*Note: unlike the original JavaScript equivalent `of`, `streamOf` takes accepts only one argument. Use `[fromArray](#fromarray)` or `[fromList](#fromlist)` if you need to emit more values.*
+*Note: unlike the original JavaScript equivalent `of`, `streamOf` takes accepts only one argument. Use [`fromArray`](#fromarray) or [`fromList`](#fromlist) if you need to emit more values.*
 
-### `fromArray`
+---
+
+### `fromArray(array('a))`
 
 Converts an array to a stream. The returned stream will emit synchronously all the items in the array, and then complete.
 
@@ -294,7 +310,9 @@ fromArray([|1, 2, 3|])
 123|
 ```
 
-### `fromList`
+---
+
+### `fromList(list('a))`
 
 Similar to `[fromArray](#fromarray)`. Converts a list to a stream. The returned stream will emit synchronously all the items in the list, and then complete.
 
@@ -308,6 +326,8 @@ Xs.fromArray: array('a) => Xs.stream('a)
 fromArray([1, 2, 3])
 123|
 ```
+
+---
 
 ## TODO
 
