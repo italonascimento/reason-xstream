@@ -103,14 +103,14 @@ let cWithLatestD = XsExtra.sampleCombine(d, c);
 
 Factories:
 
-* [`create`](#create)
-* [`createWithMemory`](#createwithmemory)
+* [`create`](#createproducer)
+* [`createWithMemory`](#createwithmemoryproducer)
 * [`never`](#never)
 * [`empty`](#empty)
 * [`throw`](#throw)
-* [`streamOf`](#streamof)
-* [`fromArray`](#fromarray)
-* [`fromList`](#fromlist)
+* [`streamOf`](#streamofa)
+* [`fromArray`](#fromarrayarraya)
+* [`fromList`](#fromlistlista)
 
 ### Listener
 
