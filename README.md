@@ -107,7 +107,7 @@ Factories:
 * [`createWithMemory`](#createwithmemoryproducer)
 * [`never`](#never)
 * [`empty`](#empty)
-* [`throw`](#throw)
+* [`throw`](#throwe)
 * [`streamOf`](#streamofa)
 * [`fromArray`](#fromarrayarraya)
 * [`fromList`](#fromlistlista)
@@ -121,7 +121,13 @@ A Listener is a JavaScript object with one to three functions attached to it: `n
 Make use of the `Xs.listener` function to build a listener:
 
 ```reason
-Xs.listener: (~next: 'a => unit, ~error: option('e => unit)=?, ~complete: option(unit => unit)=?) => Xs.listener('a, 'e)
+Xs.listener:
+  (
+    ~next: 'a => unit,
+    ~error: option('e => unit)=?,
+    ~complete: option(unit => unit)=?
+  ) =>
+  Xs.listener('a, 'e)
 ```
 
 * `next` events are the typical type, they deliver a value;
@@ -161,7 +167,12 @@ Producers are JavaScript objects with two functions attached: `start(listener)` 
 Make use of the `Xs.producer` function to build a producer:
 
 ```reason
-Xs.producer: (~start: Xs.listener('a, 'e) => unit, ~stop: unit => unit) => Xs.producer('a, 'e)
+Xs.producer:
+  (
+    ~start: Xs.listener('a, 'e) => unit,
+    ~stop: unit => unit
+  ) =>
+  Xs.producer('a, 'e)
 ```
 
 #### Example
@@ -293,7 +304,7 @@ Creates a stream that immediately emits the value passed as argument, then compl
 Xs.streamOf: 'a => Xs.stream('a)
 ```
 
-*Note: unlike the original JavaScript equivalent `of`, `streamOf` takes accepts only one argument. Use [`fromArray`](#fromarray) or [`fromList`](#fromlist) if you need to emit more values.*
+*Note: unlike the original JavaScript equivalent `of`, `streamOf` takes accepts only one argument. Use [`fromArray`](#fromarrayarraya) or [`fromList`](#fromlistlista) if you need to emit more values.*
 
 ---
 
@@ -316,7 +327,7 @@ fromArray([|1, 2, 3|])
 
 ### `fromList(list('a))`
 
-Similar to `[fromArray](#fromarray)`. Converts a list to a stream. The returned stream will emit synchronously all the items in the list, and then complete.
+Similar to [`fromArray`](#fromarrayarraya). Converts a list to a stream. The returned stream will emit synchronously all the items in the list, and then complete.
 
 ```reason
 Xs.fromArray: array('a) => Xs.stream('a)
