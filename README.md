@@ -98,21 +98,21 @@ let cWithLatestD = XsExtra.sampleCombine(d, c);
 
 ## API Documentation
 
-* `[listener](#listener)`
-* `[producer](#producer)`
+* [`listener`](#listener)
+* [`producer`](#producer)
 
 Factories:
 
-* `[create](#create)`
-* `[createWithMemory](#createwithmemory)`
-* `[never](#never)`
-* `[empty](#empty)`
-* `[throw](#throw)`
-* `[streamOf](#streamof)`
-* `[fromArray](#fromarray)`
-* `[fromList](#fromlist)`
+* [`create`](#create)
+* [`createWithMemory`](#createwithmemory)
+* [`never`](#never)
+* [`empty`](#empty)
+* [`throw`](#throw)
+* [`streamOf`](#streamof)
+* [`fromArray`](#fromarray)
+* [`fromList`](#fromlist)
 
-### `Listener`
+### Listener
 
 A Listener is a JavaScript object with one to three functions attached to it: `next('a)`, `error('e)`, and `complete()`. There is usually one function for each type of event a stream may emit, but only `next` is always required.
 
@@ -190,11 +190,11 @@ let stream = Xs.create(~producer, ());
 
 ### `create`
 
+Creates a new stream ginven a producer.
+
 ```reason
 Xs.create: (~producer: option(Xs.producer('a, 'e))=?) => Xs.stream('a)
 ```
-
-Creates a new stream ginven a producer.
 
 #### Example
 
@@ -208,11 +208,11 @@ let stream = Xs.create(~producer=myProducer, ());
 
 ### `createWithMemory`
 
+Creates a new memory stream given a producer.
+
 ```reason
 Xs.createWithMemory: (~producer: option(Xs.producer('a, 'e))=?) => Xs.stream('a)
 ```
-
-Creates a new memory stream given a producer.
 
 #### Example
 
@@ -226,11 +226,11 @@ let stream = Xs.createWithMemory(~producer=myProducer, ());
 
 ### `never`
 
+Creates a stream that never emits any event.
+
 ```reason
 Xs.never: unit => Xs.stream('a)
 ```
-
-Creates a stream that never emits any event.
 
 #### Marble diagram
 
@@ -241,11 +241,11 @@ never
 
 ### `empty`
 
+Creates a stream that completes immediately.
+
 ```reason
 Xs.empty: unit => Xs.stream('a)
 ```
-
-Creates a stream that completes immediately.
 
 #### Marble diagram
 
@@ -256,11 +256,11 @@ empty
 
 ### `throw`
 
+Creates a stream that immediately emits an "error" with the value passed as argument.
+
 ```reason
 Xs.error: 'e => Xs.stream('a)
 ```
-
-Creates a stream that immediately emits an "error" with the value passed as argument.
 
 #### Marble diagram
 
@@ -271,21 +271,21 @@ throw(X)
 
 ### `streamOf`
 
+Creates a stream that immediately emits the value passed as argument, then completes.
+
 ```reason
 Xs.streamOf: 'a => Xs.stream('a)
 ```
-
-Creates a stream that immediately emits the value passed as argument, then completes.
 
 *Note: unlike the original JavaScript equivalent `of`, `streamOf` takes accepts only one argument. Use `[fromArray](#fromarray)` or `[fromList](#fromlist)` if you need to emit more values.*
 
 ### `fromArray`
 
+Converts an array to a stream. The returned stream will emit synchronously all the items in the array, and then complete.
+
 ```reason
 Xs.fromArray: array('a) => Xs.stream('a)
 ```
-
-Converts an array to a stream. The returned stream will emit synchronously all the items in the array, and then complete.
 
 #### Marble diagram
 
@@ -296,11 +296,11 @@ fromArray([|1, 2, 3|])
 
 ### `fromList`
 
+Similar to `[fromArray](#fromarray)`. Converts a list to a stream. The returned stream will emit synchronously all the items in the list, and then complete.
+
 ```reason
 Xs.fromArray: array('a) => Xs.stream('a)
 ```
-
-Similar to `[fromArray](#fromarray)`. Converts a list to a stream. The returned stream will emit synchronously all the items in the list, and then complete.
 
 #### Marble diagram
 
