@@ -7,12 +7,7 @@ type subscription;
 type listener('a, 'e);
 
 let listener:
-  (
-    ~next: 'a => unit=?,
-    ~error: 'e => unit=?,
-    ~complete: unit => unit=?,
-    unit
-  ) =>
+  (~next: 'a => unit, ~error: 'e => unit=?, ~complete: unit => unit=?, unit) =>
   listener('a, 'e);
 
 [@bs.send.pipe: listener('a, 'e)] external next : 'a => unit = "";

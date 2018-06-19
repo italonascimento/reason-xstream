@@ -8,7 +8,6 @@ type subscription;
 
 [@bs.deriving abstract]
 type listener('a, 'e) = {
-  [@bs.optional]
   next: 'a => unit,
   [@bs.optional]
   error: 'e => unit,
