@@ -112,6 +112,8 @@ Factories:
 * [`fromArray`](#fromarrayarraya)
 * [`fromList`](#fromlistlista)
 
+---
+
 ### Listener
 
 A Listener is a JavaScript object with one to three functions attached to it: `next('a)`, `error('e)`, and `complete()`. There is usually one function for each type of event a stream may emit, but only `next` is always required.
