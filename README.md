@@ -111,8 +111,8 @@ Factories:
 * [`streamOf`](#streamofvlue)
 * [`fromArray`](#fromarrayarray)
 * [`fromList`](#fromlistlist)
-* [`fromPromise`](frompromisepromise)
-* [`periodic`](periodicperiod)
+* [`fromPromise`](#frompromisepromise)
+* [`periodic`](#periodicperiod)
 
 ---
 
