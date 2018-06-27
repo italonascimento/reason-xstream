@@ -1,6 +1,6 @@
 # ReasonXstream
 
-ReasonML bindings for [xstream](https://github.com/staltz/xstream).
+ReasonML bindings for [xstream](https://github.com/staltz/xstream), built with idiomatic Reason usage in mind.
 
 From the original lib description:
 
@@ -107,10 +107,12 @@ Factories:
 * [`createWithMemory`](#createwithmemoryproducer)
 * [`never`](#never)
 * [`empty`](#empty)
-* [`throw`](#throwe)
-* [`streamOf`](#streamofa)
-* [`fromArray`](#fromarrayarraya)
-* [`fromList`](#fromlistlista)
+* [`throw`](#throwerror)
+* [`streamOf`](#streamofvlue)
+* [`fromArray`](#fromarrayarray)
+* [`fromList`](#fromlistlist)
+* [`fromPromise`](frompromisepromise)
+* [`periodic`](periodicperiod)
 
 ---
 
@@ -279,7 +281,7 @@ empty
 
 ---
 
-### `throw('e)`
+### `throw(error)`
 
 Creates a stream that immediately emits an "error" with the value passed as argument.
 
@@ -296,7 +298,7 @@ throw(X)
 
 ---
 
-### `streamOf('a)`
+### `streamOf(value)`
 
 Creates a stream that immediately emits the value passed as argument, then completes.
 
@@ -308,7 +310,7 @@ Xs.streamOf: 'a => Xs.stream('a)
 
 ---
 
-### `fromArray(array('a))`
+### `fromArray(array)`
 
 Converts an array to a stream. The returned stream will emit synchronously all the items in the array, and then complete.
 
@@ -325,7 +327,7 @@ fromArray([|1, 2, 3|])
 
 ---
 
-### `fromList(list('a))`
+### `fromList(list)`
 
 Similar to [`fromArray`](#fromarrayarraya). Converts a list to a stream. The returned stream will emit synchronously all the items in the list, and then complete.
 
@@ -338,6 +340,33 @@ Xs.fromArray: array('a) => Xs.stream('a)
 ```
 fromArray([1, 2, 3])
 123|
+```
+
+---
+
+### `fromPromise(promise)`
+
+Converts a promise to a stream. The returned stream will emit the resolved value of the promise, and then complete. However, if the promise is rejected, the stream will emit the corresponding error.
+
+```reason
+Xs.fromPromise: Js.Promise.t('a) => Xs.stream('a)
+```
+
+---
+
+## `periodic(period)`
+
+Creates a stream that periodically emits incremental numbers, every `period` milliseconds.
+
+```reason
+Xs.periodic: int => stream(int)
+```
+
+### Marble diagram
+
+```
+periodic(1000)
+---0---1---2---3---4---...
 ```
 
 ---
