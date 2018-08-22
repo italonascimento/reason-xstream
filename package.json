@@ -9,10 +9,12 @@
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world"
   },
+  "bugs": "https://github.com/italonascimento/reason-xstream/issues",
   "keywords": [
     "Reason",
     "xstream",
-    "Reactive"
+    "Reactive",
+    "Streams"
   ],
   "devDependencies": {
     "bs-platform": "^3.1.1"
